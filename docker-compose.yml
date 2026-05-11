@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:5.14-community
+    container_name: letsgo-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+    networks:
+      - letsgo-network
+
+  web:
+    build: .
+    container_name: letsgo-web
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=password123
+      - SECRET_KEY=dev-secret-key-change-in-production
+    volumes:
+      - .:/app
+    depends_on:
+      - neo4j
+    networks:
+      - letsgo-network
+    command: python run.py
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+
+networks:
+  letsgo-network:
+    driver: bridge

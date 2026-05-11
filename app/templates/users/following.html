@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Following{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">
+            <a href="{{ url_for('users.profile', username=user.username) }}" class="text-decoration-none">
+                {{ user.username }}
+            </a>'s Following
+        </h2>
+
+        {% if following %}
+            <div class="list-group">
+                {% for followed in following %}
+                <div class="list-group-item">
+                    <div class="d-flex align-items-center">
+                        {% if followed.avatar_url %}
+                        <img src="{{ followed.avatar_url }}" class="rounded-circle me-3" width="50" height="50" alt="{{ followed.username }}">
+                        {% else %}
+                        <div class="bg-secondary rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <i class="bi bi-person text-white"></i>
+                        </div>
+                        {% endif %}
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">
+                                <a href="{{ url_for('users.profile', username=followed.username) }}" class="text-decoration-none">
+                                    {{ followed.username }}
+                                </a>
+                            </h6>
+                            {% if followed.bio %}
+                            <small class="text-muted">{{ followed.bio[:100] }}{% if followed.bio|length > 100 %}...{% endif %}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-secondary text-center">
+                <i class="bi bi-people"></i>
+                <p class="mb-0">Not following anyone yet.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

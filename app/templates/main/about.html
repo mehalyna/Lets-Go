@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}About - Let's Go{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title mb-4">About Let's Go</h1>
+                
+                <p class="lead">
+                    Let's Go is a modern social network built with Flask and Neo4j graph database.
+                </p>
+
+                <h3 class="mt-4">Features</h3>
+                <ul>
+                    <li>User registration and authentication</li>
+                    <li>Customizable user profiles</li>
+                    <li>Follow/unfollow other users</li>
+                    <li>Create and share posts with images</li>
+                    <li>Like and comment on posts</li>
+                    <li>Personalized feed from followed users</li>
+                    <li>Explore and discover new users</li>
+                </ul>
+
+                <h3 class="mt-4">Technology</h3>
+                <p>
+                    This application leverages the power of graph databases through Neo4j, 
+                    which is perfect for modeling social network relationships. Flask provides 
+                    a lightweight and flexible web framework for the backend.
+                </p>
+
+                <h3 class="mt-4">Open Source</h3>
+                <p>
+                    This project is open source and available for learning and contribution.
+                </p>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('main.index') }}" class="btn btn-primary">
+                        <i class="bi bi-house"></i> Go to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
